@@ -1,0 +1,297 @@
+/* ============================================================
+   1. ส่วนตั้งค่าพื้นฐาน (GLOBAL SETTINGS)
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f0f2f5; 
+    font-family: 'Prompt', sans-serif;
+    color: #444;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #ced4da; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #adb5bd; }
+
+a { text-decoration: none !important; }
+
+/* ============================================================
+   2. หน้าแชท (CHAT PAGE LAYOUT)
+   ============================================================ */
+.chat-container {
+    height: 85vh; 
+    margin-top: 10px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex;
+    border: 1px solid #e0e0e0;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+}
+
+.sidebar {
+    width: 320px;
+    border-right: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+}
+
+.user-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.user-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f8f9fa;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    color: #333;
+}
+
+.user-item:hover { background-color: #f1f8ff; }
+.user-item.active { 
+    background-color: #e7f1ff; 
+    border-left: 4px solid #0061f2; 
+}
+
+.user-avatar-list {
+    width: 48px; 
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f7fb; /* พื้นหลังฝั่งแชทให้ออกสีฟ้านิดๆ */
+    position: relative;
+}
+
+.chat-header {
+    padding: 15px 25px;
+    background: white;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.messages-box { 
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ============================================================
+   3. ระบบกล่องข้อความ (CHAT BUBBLES)
+   ============================================================ */
+.msg-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+    animation: fadeIn 0.3s ease;
+}
+
+.msg-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
+}
+
+/* ฝั่งเรา (ขวา) */
+.msg-row.me { justify-content: flex-end; }
+.msg-row.me .msg-wrapper { align-items: flex-end; }
+.msg-row.me .msg-bubble {
+    background: linear-gradient(135deg, #0061f2 0%, #00c6f9 100%);
+    color: white;
+    border-radius: 18px 18px 2px 18px;
+    box-shadow: 0 4px 10px rgba(0, 97, 242, 0.2);
+}
+
+/* ฝั่งคู่สนทนา (ซ้าย) */
+.msg-row.partner { justify-content: flex-start; }
+.msg-row.partner .msg-wrapper { align-items: flex-start; }
+.msg-row.partner .msg-bubble {
+    background-color: #ffffff;
+    color: #333;
+    border-radius: 18px 18px 18px 2px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.msg-bubble {
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.chat-time {
+    font-size: 0.7rem;
+    color: #999;
+    margin-top: 5px;
+}
+
+.chat-avatar-small {
+    width: 32px; 
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    align-self: flex-end;
+    margin-bottom: 15px;
+}
+
+/* ช่องพิมพ์ข้อความ */
+.chat-input-area {
+    padding: 15px 25px;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+/* ============================================================
+   4. หน้า DASHBOARD & WIDGETS
+   ============================================================ */
+.navbar-custom {
+    background: linear-gradient(135deg, #0061f2 0%, #00c6f9 100%);
+    box-shadow: 0 4px 15px rgba(0, 97, 242, 0.2);
+}
+
+.card-custom {
+    border: none;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-8px);
+}
+
+/* Floating Chat Button */
+.chat-toggle-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0061f2 0%, #00c6f9 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 8px 25px rgba(0, 97, 242, 0.4);
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+/* ============================================================
+   5. RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    .chat-container {
+        height: calc(100vh - 60px); /* หักความสูง navbar ด้านบนออก */
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+    }
+
+    /* แทนที่จะซ่อน Sidebar ไปเลย ทำเป็น Overlay เลื่อนเข้า-ออกได้ */
+    .sidebar {
+        display: flex !important;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        bottom: 0;
+        width: 85%;
+        max-width: 320px;
+        z-index: 1040;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+    }
+    .sidebar.show-mobile {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        top: 60px; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 1035;
+    }
+    .sidebar-backdrop.show-mobile { display: block; }
+
+    .chat-header { padding: 12px 15px; }
+    .chat-back-btn-mobile { display: inline-flex !important; }
+    .messages-box { padding: 15px; }
+    .msg-wrapper { max-width: 85%; }
+    .chat-input-area { padding: 10px 15px; }
+}
+
+.chat-back-btn-mobile { display: none; }
+
+/* ============================================================
+   6. RESPONSIVE DASHBOARD & GENERAL PAGES
+   ============================================================ */
+@media (max-width: 576px) {
+    .chat-float-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 54px;
+        height: 54px;
+        font-size: 24px;
+    }
+    .chat-popup-modern {
+        width: 92vw;
+        right: 4vw;
+        bottom: 85px;
+        max-width: 380px;
+    }
+    .navbar-brand { font-size: 1.1rem; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,36 @@
+# Environment & Credentials
+.env.php
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Uploads (user data)
+uploads/*
+!uploads/.gitkeep
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# PHP Session & Cache
+session/
+cache/
+temp/
+
+# Composer
+vendor/
+composer.lock
+
+# Node (if using webpack, etc)
+node_modules/
+npm-debug.log
+yarn-error.log

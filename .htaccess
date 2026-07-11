@@ -1,0 +1,31 @@
+# ============================================================
+# Security Headers สำหรับทั้งระบบ Skill Exchange
+# ============================================================
+
+<IfModule mod_headers.c>
+    # ป้องกันการแสดงเว็บใน iframe ของเว็บอื่น (Clickjacking)
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # ป้องกันเบราว์เซอร์เดา MIME type ผิดประเภท
+    Header always set X-Content-Type-Options "nosniff"
+
+    # เปิดการป้องกัน XSS ในเบราว์เซอร์รุ่นเก่า
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # จำกัดข้อมูล referrer ที่ส่งออกไปเว็บอื่น
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # จำกัดสิทธิ์การใช้ฟีเจอร์เบราว์เซอร์ที่ไม่จำเป็น
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ปิดการแสดง directory listing
+Options -Indexes
+
+# ป้องกันไม่ให้เข้าถึงไฟล์ฐานข้อมูล/บันทึก/สำรองข้อมูลโดยตรงผ่าน URL
+<FilesMatch "\.(sql|log|bak|env|ini|config)$">
+    Require all denied
+</FilesMatch>
+
+# ใช้งาน PHP แบบ CGI/FastCGI (ตั้งเป็น On ถ้าเซิร์ฟเวอร์รองรับ)
+AddHandler application/x-httpd-php-source .php
